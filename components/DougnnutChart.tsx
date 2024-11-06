@@ -10,7 +10,7 @@ const DougnnutChart = ({ accounts }:DoughnutChartProps) => {
             {
                 label: "Banks",
                 data: [1234,3456, 5677],
-                backgroundColor : ['#0747b6', "#2265d8", "#2f91fa"]
+                backgroundColor: ["#0747b6", "#2265d8", "#2f91fa"]
             }
         ],
         labels: ["EAON", "RAKUTEN", "WISE"]
