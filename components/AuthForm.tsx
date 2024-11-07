@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import Image from "next/image"
 import React, { useState } from 'react'
+import CustomInput from "./CustomInput"
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -112,6 +113,7 @@ const AuthForm = ({type}: {type:string}) => {
                             </div>
                         )}
                         />
+                        <CustomInput control={form.control} name="username" label="username" placeholder="Enter your username"/>
                         <Button type="submit">Submit</Button>
                     </form>
                 </Form>
