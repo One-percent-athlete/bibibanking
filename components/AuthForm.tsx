@@ -18,9 +18,7 @@ import Image from "next/image"
 import React, { useState } from 'react'
 
 const formSchema = z.object({
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
+    email: z.string().email(),
   })
 
 const AuthForm = ({type}: {type:string}) => {
@@ -28,11 +26,10 @@ const AuthForm = ({type}: {type:string}) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-          username: "",
+          email: "",
         },
       })
      
-      // 2. Define a submit handler.
       function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
@@ -69,7 +66,56 @@ const AuthForm = ({type}: {type:string}) => {
                 Plaidlink
             </div>
         ): (
-            <>Form</>
+            <>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <div className="form-item">
+                                <FormLabel className="form-label">
+                                    Email
+                                </FormLabel>
+                                <div className="flex flex-col w-full">
+                                    <FormControl>
+                                        <Input 
+                                        placeholder="Enter your email"
+                                        className="input-class"
+                                        {...field}
+                                        />                                    
+                                    </FormControl>
+                                    <FormMessage className="form-message mt-2" />
+                                </div>
+                            </div>
+                        )}
+                        />
+                        <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <div className="form-item">
+                                <FormLabel className="form-label">
+                                    Password
+                                </FormLabel>
+                                <div className="flex flex-col w-full">
+                                    <FormControl>
+                                        <Input 
+                                        placeholder="Enter your password"
+                                        className="input-class"
+                                        type="password"
+                                        {...field}
+                                        />                                    
+                                    </FormControl>
+                                    <FormMessage className="form-message mt-2" />
+                                </div>
+                            </div>
+                        )}
+                        />
+                        <Button type="submit">Submit</Button>
+                    </form>
+                </Form>
+            </>
         )}
     </section>
   )
