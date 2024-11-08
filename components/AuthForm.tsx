@@ -24,16 +24,18 @@ import { Loader, Loader2 } from "lucide-react"
 const AuthForm = ({type}: {type:string}) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(false)
+
+    const formSchema = authFormSchema(type)
     
-    const form = useForm<z.infer<typeof authFormSchema>>({
-        resolver: zodResolver(authFormSchema),
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
         defaultValues: {
           email: "",
           password: "",
         },
       })
      
-      function onSubmit(values: z.infer<typeof authFormSchema>) {
+      function onSubmit(values: z.infer<typeof formSchema>) {
         setLoading(true)
         console.log(values)
         setLoading(false)
@@ -72,8 +74,32 @@ const AuthForm = ({type}: {type:string}) => {
             <>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                        <CustomInput control={form.control} name="email" label="Email" placeholder="Enter your email"/>
-                        <CustomInput control={form.control} name="password" label="Password" placeholder="Enter your password"/>
+                        { type === "sign-up" ? (
+                                <>
+                                    <div className="flex gap-4">
+                                        <CustomInput control={form.control} name="firstName" label="First name" placeholder="Jonh"/>
+                                        <CustomInput control={form.control} name="lastName" label="Last name" placeholder="Wick" />
+                                    </div>
+                                    <CustomInput control={form.control} name="address" label="Address" placeholder="Enter your address" />
+                                    <div className="flex gap-4">
+                                        <CustomInput control={form.control} name="prefecture" label="Prefecture" placeholder="Prefecture"/>
+                                        <CustomInput control={form.control} name="postalCode" label="Postal code" placeholder="1234567"/>
+                                    </div>
+                                    <div className="flex gap-4">
+                                        <CustomInput control={form.control} name="dateOfBirth" label="Date of birth" placeholder="YYYY-MM-DD"/>
+                                        <CustomInput control={form.control} name="ssn" label="SSN" placeholder="123456789"/>
+                                    </div>
+                                    <CustomInput control={form.control} name="email" label="Email" placeholder="Enter your email"/>
+                                    <CustomInput control={form.control} name="password" label="Password" placeholder="Enter your password"/>
+                                </>
+                            ) : (
+                                <>
+                                    <CustomInput control={form.control} name="email" label="Email" placeholder="Enter your email"/>
+                                    <CustomInput control={form.control} name="password" label="Password" placeholder="Enter your password"/>
+                                </>
+
+                            )
+                        }
 
                         <div className="flex flex-col gap-4">
                             <Button type="submit" className="form-btn" disabled={loading}>
