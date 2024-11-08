@@ -22,7 +22,7 @@ export const signUp = async (userData : SignUpParams) => {
   try {
     const { account } = await createAdminClient();
 
-   const newUserAccount = await account.create(ID.unique(), email, password, firstName);
+   const newUserAccount = await account.create(ID.unique(), email, password, `${firstName}${lastName}`);
     const session = await account.createEmailPasswordSession(email, password);
   
     (await cookies()).set("appwrite-session", session.secret, {
