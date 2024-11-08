@@ -26,7 +26,7 @@ import { signIn, signUp } from "@/lib/actions/user.actions"
 const AuthForm = ({type}: {type:string}) => {
 
     const router = useRouter()
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
     const formSchema = authFormSchema(type)
@@ -48,11 +48,11 @@ const AuthForm = ({type}: {type:string}) => {
                 setUser(newUser)
             }
             if (type === "sign-in") {
-                const res = await signIn({
-                    email: data.email,
-                    password: data.password
-                })
-                if (res) router.push("/")
+                // const res = await signIn({
+                //     email: data.email,
+                //     password: data.password
+                // })
+                // if (res) router.push("/")
             }
         } catch (error) {
             console.log(error);
