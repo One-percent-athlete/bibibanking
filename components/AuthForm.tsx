@@ -20,6 +20,7 @@ import CustomInput from "./CustomInput"
 import { authFormSchema } from "@/lib/utils"
 import { Loader, Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { signIn, signUp } from "@/lib/actions/user.actions"
 
 
 const AuthForm = ({type}: {type:string}) => {
@@ -43,15 +44,15 @@ const AuthForm = ({type}: {type:string}) => {
 
         try {
             if (type === "sign-up") {
-                // const newUser = await signUp(data)
-                // setUser(newUser)
+                const newUser = await signUp(data)
+                setUser(newUser)
             }
             if (type === "sign-in") {
-                // const res = await signIn({
-                //     email: data.email,
-                //     password: data.password
-                // })
-                // if (res) router.push("/")
+                const res = await signIn({
+                    email: data.email,
+                    password: data.password
+                })
+                if (res) router.push("/")
             }
         } catch (error) {
             console.log(error);
