@@ -8,6 +8,14 @@ import { CountryCode, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestPr
 import { plaidClient } from "../plaid";
 import { addFundingSource } from "./dwolla.actions";
 import { revalidatePath } from "next/cache";
+import { parse } from "path";
+
+
+const {
+  APPWRITE_DATABASE_ID : DATABASE_ID,
+  APPWRITE_USER_COLLECTION_ID : USER_COLLECTION_ID,
+  APPWRITE_BANK_COLLECTION_ID : BANK_COLLECTION_ID
+} = process.env
 
 export const signIn = async ({ email, password }: signInProps) => {
   try {
@@ -86,6 +94,36 @@ export const createLinkToken = async (user: User) => {
   }
 }
 
+export const createBankAccount = async ({
+  userId,
+  bankId,
+  accountId,
+  accessToken,
+  fundingSourceUrl,
+  shareableId,
+} : createBankAccountProps ) => {
+  try {
+    const { database } = await createAdminClient()
+    const bankAccount = await database.createDocument(
+      DATABASE_ID!,
+      BANK_COLLECTION_ID!,
+      ID.unique(),
+      {
+        userId,
+        bankId,
+        accountId,
+        accessToken,
+        fundingSourceUrl,
+        shareableId,
+      }
+    )
+
+    return parseStringify(bankAccount)
+  } catch (error) {
+    
+  }
+}
+
 export const exchangePublicToken = async ({user, publicToken}: exchangePublicTokenProps) => {
   try {
     const response = await plaidClient.itemPublicTokenExchange({
@@ -124,7 +162,7 @@ export const exchangePublicToken = async ({user, publicToken}: exchangePublicTok
       accountId : accountData.account_id,
       accessToken,
       fundingSourceUrl,
-      sharableId : encryptId(accountData.account_id)
+      shareableId : encryptId(accountData.account_id)
     })
 
     revalidatePath("/")
