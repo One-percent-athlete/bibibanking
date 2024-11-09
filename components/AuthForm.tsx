@@ -47,9 +47,9 @@ const AuthForm = ({type}: {type:string}) => {
             const userData = {
                 firstName: data.firstName!,
                 lastName: data.lastName!,
-                address: data.address!,
+                address1: data.address1!,
                 city: data.city!,
-                prefecture: data.prefecture!,
+                state: data.state!,
                 postalCode: data.postalCode!,
                 dateOfBirth: data.dateOfBirth!,
                 ssn: data.ssn!,
@@ -101,11 +101,11 @@ const AuthForm = ({type}: {type:string}) => {
                 </p>
             </div>
         </header>
-        {/* {user ? ( */}
+        {user ? (
             <div className="flex flex-col gap-4">
                 <PlaidLink user={user} variant="primary" />
             </div>
-        {/* ): ( */}
+        ): (
             <>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -115,10 +115,10 @@ const AuthForm = ({type}: {type:string}) => {
                                         <CustomInput control={form.control} name="firstName" label="First name" placeholder="Jonh"/>
                                         <CustomInput control={form.control} name="lastName" label="Last name" placeholder="Wick" />
                                     </div>
-                                    <CustomInput control={form.control} name="address" label="Address" placeholder="Enter your address" />
+                                    <CustomInput control={form.control} name="address1" label="Address" placeholder="Enter your address" />
                                     <CustomInput control={form.control} name="city" label="City" placeholder="Enter your city" />
                                     <div className="flex gap-4">
-                                        <CustomInput control={form.control} name="prefecture" label="Prefecture" placeholder="Prefecture"/>
+                                        <CustomInput control={form.control} name="state" label="State" placeholder="Enter your state"/>
                                         <CustomInput control={form.control} name="postalCode" label="Postal code" placeholder="1234567"/>
                                     </div>
                                     <div className="flex gap-4">
@@ -162,7 +162,7 @@ const AuthForm = ({type}: {type:string}) => {
                     </Link>
                 </footer>
             </>
-        {/* )} */}
+        )}
     </section>
   )
 }

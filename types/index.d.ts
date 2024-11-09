@@ -10,9 +10,9 @@ declare type SearchParamProps = {
 declare type SignUpParams = {
   firstName: string;
   lastName: string;
-  address: string;
+  address1: string;
   city: string;
-  prefecture: string;
+  state: string;
   postalCode: string;
   dateOfBirth: string;
   ssn: string;
@@ -34,9 +34,9 @@ declare type User = {
   firstName: string;
   lastName: string;
   name: string;
-  address: string;
+  address1: string;
   city: string;
-  prefecture: string;
+  state: string;
   postalCode: string;
   dateOfBirth: string;
   ssn: string;
@@ -95,7 +95,7 @@ declare type Bank = {
 declare type AccountTypes =
   | "depository"
   | "credit"
-  | "loan "
+  | "loan"
   | "investment"
   | "other";
 
@@ -129,13 +129,14 @@ declare type NewDwollaCustomerParams = {
   lastName: string;
   email: string;
   type: string;
-  address: string;
+  address1: string;
   city: string;
-  prefecture: string;
+  state: string;
   postalCode: string;
   dateOfBirth: string;
   ssn: string;
 };
+
 
 declare interface CreditCardProps {
   account: Account;
@@ -179,14 +180,14 @@ declare interface PlaidLinkProps {
   dwollaCustomerId?: string;
 }
 
-// declare type User = sdk.Models.Document & {
-//   accountId: string;
-//   email: string;
-//   name: string;
-//   items: string[];
-//   accessToken: string;
-//   image: string;
-// };
+declare type User = sdk.Models.Document & {
+  accountId: string;
+  email: string;
+  name: string;
+  items: string[];
+  accessToken: string;
+  image: string;
+};
 
 declare interface AuthFormProps {
   type: "sign-in" | "sign-up";
