@@ -8,7 +8,7 @@ import { CountryCode, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestPr
 import { plaidClient } from "../plaid";
 import { addFundingSource, createDwollaCustomer } from "./dwolla.actions";
 import { revalidatePath } from "next/cache";
-import { parse } from "path";
+
 
 // const {
 //   APPWRITE_DATABASE_ID : DATABASE_ID,
@@ -27,8 +27,8 @@ export const signIn = async ({ email, password }: signInProps) => {
   }
 }
 
-export const signUp = async (userData : SignUpParams) => {
-  const {email, password, firstName, lastName} = userData
+export const signUp = async ({ password, ...userData} : SignUpParams) => {
+  const {email, firstName, lastName} = userData
 
   let newUserAccount;
   try {
@@ -103,7 +103,7 @@ export const createLinkToken = async (user: User) => {
       user: {
         client_user_id: user.$id
       },
-      client_name: user.name,
+      client_name: `${user.firstName} ${user.lastName}`,
       products : ["auth"] as Products[],
       language : "en",
       country_codes: ['US'] as CountryCode[]
@@ -199,3 +199,33 @@ export const exchangePublicToken = async ({user, publicToken}: exchangePublicTok
   }
 
 }
+
+export const getBanks = async ({ userId }: getBanksProps ) => {
+  try {
+        const { database } = await createAdminClient()
+        const banks = await database.listDocuments(
+          DATABASE_ID!,
+          BANK_COLLECTION_ID!,
+          [Query.equal('userId', [userId])]
+        )
+
+        return parseStringify(banks.documents)
+      } catch (error) {
+        console.log(error); 
+      }
+    }
+
+export const getBank = async ({ documentId }: getBankProps ) => {
+  try {
+        const { database } = await createAdminClient()
+        const bank = await database.listDocuments(
+          DATABASE_ID!,
+          BANK_COLLECTION_ID!,
+          [Query.equal('$id', [documentId])]
+        )
+
+        return parseStringify(bank.documents[0])
+      } catch (error) {
+        console.log(error); 
+      }
+    }
