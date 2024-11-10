@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
+import { BankTabItem } from "./BankTabItem"
 
 const RecentTransactions = ({ accounts, transactions = [], appwriteItemId, page = 1 }: RecentTransactionsProps) => {
   return (
@@ -11,9 +11,11 @@ const RecentTransactions = ({ accounts, transactions = [], appwriteItemId, page 
         </header>
         <Tabs defaultValue={appwriteItemId} className="w-full">
             <TabsList className="recent-transaction-tablist">
-                {accounts.map((account: Account) => {
-                    <TabsTrigger key={account.id} value={appwriteItemId} />
-                })}
+                {accounts.map((account: Account) => (
+                    <TabsTrigger key={account.id} value={appwriteItemId}>
+                        <BankTabItem key={account.id} account={account} appwriteItemId={appwriteItemId} />
+                    </TabsTrigger>
+                ))}
             </TabsList>
         </Tabs>
 
