@@ -1,6 +1,7 @@
 import HeaderBox from "@/components/HeaderBox"
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
+import { formatAmount } from "@/lib/utils";
 import React from 'react'
 
 const TransactionHistory = async ({ searchParams: {id, page}}: SearchParamProps) => {
@@ -25,9 +26,22 @@ const TransactionHistory = async ({ searchParams: {id, page}}: SearchParamProps)
       <div className="space-y-6">
         <div className="transactions-account">
           <div className="flex flex-col gap-2">
-            <h2>{account}</h2>
+            <h2 className="text-18 font-bold tet-white">
+              {account?.data.name}
+            </h2>
+            <p className="text-14 text-blue-25">
+              {account?.data.officialName}
+            </p>
+            <p className="text-14 font-semibold tracking-[1.1px] text-white">
+                ●●●● ●●●● ●●●●<span className="text-16">{account?.data.mask}</span>
+            </p>
+          </div>
+          <div className="transactions-account-balance">
+            <p className="text-14">Current Balance</p>
+            <p className="text-24 text-center font-bold">{formatAmount(account?.data.currentBalance)}</p>
           </div>
         </div>
+
       </div>
     </div>
   )
