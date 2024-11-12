@@ -53,7 +53,7 @@ const TransactionHistory = async ({ searchParams: {id, page}}: SearchParamProps)
         </div>
 
         <section className="flex flex-col w-full gap-6">
-          <TransactionsTable transactions={account?.transactions}/>
+          <TransactionsTable transactions={currentTransactions}/>
           {totalPages > 1 && (
               <div className="my-4 w-full">
                   <Pagination totalPages={totalPages} page={currentPage} />
