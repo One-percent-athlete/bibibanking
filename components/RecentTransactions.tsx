@@ -31,8 +31,12 @@ const RecentTransactions = ({ accounts, transactions = [], appwriteItemId, page 
             {accounts.map((account:Account) => (
                 <TabsContent value={account.appwriteItemId} key={account.id} className="space-y-4">
                     <BankInfo account={account} appwriteItemId={appwriteItemId} type="full" />
-                    <TransactionsTable transactions={transactions} />
-                    <Pagination totalPages={totalPages} page={page} />
+                    <TransactionsTable transactions={currentTransactions} />
+                    {totalPages > 1 && (
+                        <div className="my-4 w-full">
+                            <Pagination totalPages={totalPages} page={page} />
+                        </div>
+                    )}
                 </TabsContent>
             ))}
         </Tabs>
